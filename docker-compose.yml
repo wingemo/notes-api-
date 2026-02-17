@@ -4,8 +4,9 @@ services:
   ollama:
     image: ollama/ollama
     container_name: ollama
-    ports:
-      - "11434:11434"
+    # Ingen host-port behövs i CI
+    # ports:
+    #   - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped
@@ -15,8 +16,6 @@ services:
     container_name: notes_api
     depends_on:
       - ollama
-    ports:
-      - "8000:8000"
     environment:
       - OLLAMA_URL=http://ollama:11434/api/generate
       - MODEL=mistral
@@ -24,3 +23,4 @@ services:
 
 volumes:
   ollama_data:
+
